@@ -3,13 +3,14 @@ from datetime import datetime, timedelta
 import pandas as pd
 import sys
 
-DIRETORIO_ATUAL = os.getcwd()[0].upper() + os.getcwd()[1:]
+DIRETORIO_ATUAL = 'pasta aonde o robo vai rodar'
 DIRETORIO_RAIZ = '\\'.join(DIRETORIO_ATUAL.split('\\')[:5])
 
 if not DIRETORIO_RAIZ in sys.path:
     sys.path.append(DIRETORIO_RAIZ)
 
-def receberProxDiaUtil(): 
+def receberProxDiaUtil():
+
     dfDatasFeriados = pd.read_excel('https://www.anbima.com.br/feriados/arqs/feriados_nacionais.xls', skipfooter=9) 
     dfDatasFeriados['Data'] = pd.to_datetime(dfDatasFeriados['Data'])
     datasFeriados = dfDatasFeriados['Data'].tolist()
@@ -19,10 +20,10 @@ def receberProxDiaUtil():
     return data
 
 def main():
-    DIA_UTIL = receberProxDiaUtil()
+
     DATA_ATUAL = datetime.now()
 
-    nomeDevs = ['Henrique', 'Marlon']
+    nomeDevs = ['Nome de todos os membros da equipe']
 
     relatorio = open('relatorio-'+DATA_ATUAL.strftime('%d-%m-%Y')+'.txt', 'a+')
     relatorio.write('Feitos ('+DATA_ATUAL.strftime('%d/%m/%Y')+'):\n')
@@ -41,6 +42,7 @@ def main():
     relatorio.close()
 
 def extrair_tarefas(arquivo):
+
     feitoOntem = arquivo[arquivo.index('O que foi feito anteriormente:')+1:arquivo.index('Metas de hoje:')]
     metasHoje = arquivo[arquivo.index('Metas de hoje:')+1:]
     tarefasAnteriores = []
@@ -54,7 +56,6 @@ def extrair_tarefas(arquivo):
         if item != '':
             tarefasAtuais.append(item)
     return (tarefasAnteriores, tarefasAtuais)
-    
 
 def ler_arquivo(data_atual, nome_pessoa):
 
@@ -63,8 +64,8 @@ def ler_arquivo(data_atual, nome_pessoa):
         arquivo = f.read().split('\n') # Lendo o arquivo
     return arquivo
 
-
 def gerar_relatorio_final(tarefasAnteriores, tarefasAtuais, relatorio):
+
     diaUtil = receberProxDiaUtil()
 
     for item in tarefasAnteriores:
