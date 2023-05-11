@@ -55,7 +55,7 @@ def main():
 
             diretorioDev = CAMINHO_OUTPUT + dev.capitalize() + '\\' + DATA_ATUAL.strftime('%Y') + '\\' + DICT_CONVERSAO_MES_INTEIRO[DATA_ATUAL.strftime('%m')] + '\\'
             shutil.move(CAMINHO_INPUT + '\\' + nomeArquivo, diretorioDev)
-        
+
         gerar_relatorio_final(tarefas_feitas, metas_hoje, DATA_ATUAL)
     else:
         cancelarOperacao = 'Cancelada a geração do relatório final.'
@@ -101,7 +101,7 @@ def extrair_tarefas(arquivo):
 def ler_arquivo(nome_arquivo):
 
     # Abrir o arquivo do dia que o robô vai rodar
-    with open('daily_'+nome_pessoa+'_'+data_atual.strftime('%d')+'_'+data_atual.strftime('%m')+'_'+data_atual.strftime('%Y')+'.txt', 'r') as f:
+    with open(CAMINHO_INPUT + nome_arquivo) as f:
         arquivo = f.read().split('\n') # Lendo o arquivo
     return arquivo
 
